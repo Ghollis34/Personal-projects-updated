@@ -7,6 +7,7 @@ import sqlite3
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+favicon_path = r'C:\Users\George\Documents\Personal-projects-main\test\favicon.ico'
 
 def get_db_connection():
     conn = sqlite3.connect(r'C:\Users\George\Documents\Personal-projects-main\menu_items.db')
@@ -27,6 +28,7 @@ async def add_meal(request: Request):
 
 @app.post("/add_meal")
 async def add_meal(request: Request):
+    days_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     form_data = await request.form()
     meal = form_data['meal']
     ingredients = form_data['ingredients']

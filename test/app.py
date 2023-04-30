@@ -4,13 +4,15 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 import sqlite3
+from pathlib import Path
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-favicon_path = r'C:\Users\George\Documents\Personal-projects-main\test\favicon.ico'
+favicon_path = Path(__file__).resolve().parent / "test" / "favicon.ico"
 
 def get_db_connection():
-    conn = sqlite3.connect(r'C:\Users\George\Documents\Personal-projects-main\menu_items.db')
+    db_path = Path(__file__).resolve().parent.parent / "menu_items.db"
+    conn = sqlite3.connect(str(db_path))
     conn.row_factory = sqlite3.Row
     return conn
 

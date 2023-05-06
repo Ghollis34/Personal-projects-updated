@@ -34,19 +34,19 @@ number_of_ant_chall = config.getint('number_bought', 'ant_chall')
 
 
 
-stock_con = 5.30
+stock_con = 5.32
 stonks_stock_con = ((float(stock_con) - bought_stock_con)/bought_stock_con)*100
 
-stock_chall = 9.12
+stock_chall = 8.93
 stonks_stock_chall = ((float(stock_chall) - bought_stock_chall)/bought_stock_chall)*100
 
-ant_chall = 1.17
+ant_chall = 1.00
 stonks_ant_chall = ((float(ant_chall) - bought_ant_chall)/bought_ant_chall)*100
 
-rio_leg = 0.63
+rio_leg = 0.55
 stonks_rio_leg = ((float(rio_leg) - bought_rio_leg)/bought_rio_leg)*100
 
-rio_chall = 0.74
+rio_chall = 0.63
 stonks_rio_chall = ((float(rio_chall) - bought_rio_chall)/bought_rio_chall)*100
 
 total_money_gain = ((stock_con*number_of_stock_con) + (stock_chall*number_of_stock_chall) + (ant_chall*number_of_ant_chall) + (rio_leg*number_of_rio_leg) + (rio_chall*number_of_rio_chall))

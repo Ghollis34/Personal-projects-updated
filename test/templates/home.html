@@ -65,6 +65,32 @@
             display: flex;
             justify-content: center;
         }
+
+        .fats {
+            color: #ff4d4d;
+            /* soft red */
+            font-weight: bold;
+            padding-left: 10px;
+        }
+
+        .protein {
+            color: #248d24;
+            /* soft green */
+            font-weight: bold;
+        }
+
+        .carbs {
+            color: #4d4dff;
+            /* soft blue */
+            font-weight: bold;
+        }
+
+        .calories {
+            color: #ffad33;
+            /* soft orange */
+            font-weight: bold;
+            padding-left: 10px;
+        }
     </style>
 </head>
 
@@ -73,24 +99,73 @@
         <h1>Meal Generator</h1>
         <form action="/generate_ingredients">
             {% for i in range(7) %}
-            <div class="form-group">
+            <div class="form-group custom-select">
                 <label for="meal{{i}}">{{days_of_week[i]}}:</label>
-                <select name="meal" id="meal{{i}}">
+                <select name="meal" id="meal{{i}}" onchange="updateMealInfo({{i}})">
                     <option value=""></option>
                     {% for meal in meals %}
                     <option value="{{meal['meal']}}">{{meal['meal']}}</option>
                     {% endfor %}
                 </select>
+                <div id="mealInfo{{i}}"></div>
             </div>
             {% endfor %}
             <div class="buttons">
                 <input type="submit" value="Generate Ingredients" class="btn">
+                <button type="button" class="btn" onclick="copyToClipboard()">Copy Meals to Clipboard</button>
         </form>
+        <script>
+            let meals = {{ meals| tojson }};
+            let todayDate = new Date('{{today_date}}');
+            let days_of_week = {{ days_of_week | tojson}}
 
+            function updateMealInfo(i) {
+                let mealToEdit = document.getElementById("meal" + i).value;
+
+                let mealInfo = meals.find(meal => meal.meal === mealToEdit);
+
+                if (mealInfo) {
+                    document.getElementById("mealInfo" + i).innerHTML =
+                        '<span class="fats">Fats: ' + mealInfo.Fats + '</span>' +
+                        ', <span class="carbs">Carbs: ' + mealInfo.Carbs + '</span>' +
+                        ', <span class="protein">Protein: ' + mealInfo.Protein + '</span>' +
+                        ', <span class="calories">Calories: ' + mealInfo.Calories + '</span>';
+                } else {
+                    document.getElementById("mealInfo" + i).innerHTML = "";
+                }
+            }
+
+            function copyToClipboard() {
+                let todayDate = new Date();
+                let daysUntilMonday = (8 - todayDate.getDay()) % 7 || 7; // getDay() returns 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+                todayDate.setDate(todayDate.getDate() + daysUntilMonday); // set todayDate to the following Monday
+
+                let mealsSelected = '';
+                for (let i = 0; i < 7; i++) {
+                    let selectedMeal = document.getElementById('meal' + i).value;
+                    if (selectedMeal) {
+                        let date = new Date(todayDate);
+                        date.setDate(todayDate.getDate() + i);
+                        let formattedDate = ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear().toString().slice(-2);
+                        mealsSelected += formattedDate + ' - ' + days_of_week[i] + ' - ' + selectedMeal + '\n \n';
+                    }
+                }
+                navigator.clipboard.writeText(mealsSelected);
+            }
+
+
+
+            document.addEventListener('DOMContentLoaded', (event) => {
+                document.querySelectorAll('select').forEach((select) => {
+                    select.addEventListener('change', copyToClipboard);
+                });
+            });
+        </script>
         <a href="/add_meal" class="btn">Add a Meal</a>
         <a href="/edit_meal" class="btn">Edit a Meal</a>
     </div>
     </div>
 </body>
+
 
 </html>

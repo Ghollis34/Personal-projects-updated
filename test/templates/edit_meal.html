@@ -91,6 +91,23 @@
                 <label for="new_ingredients">New Ingredients:</label><br>
                 <input type="text" id="new_ingredients" name="new_ingredients"><br><br>
             </div>
+            <div class="form-group">
+                <label for="new_fats">New Fats:</label><br>
+                <input type="text" id="new_fats" name="new_fats"><br><br>
+            </div>
+            <div class="form-group">
+                <label for="new_carbs">New Carbs:</label><br>
+                <input type="text" id="new_carbs" name="new_carbs"><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="new_protein">New Protein:</label><br>
+                <input type="text" id="new_protein" name="new_protein"><br><br>
+            </div>
+            <div class="form-group">
+                <label for="new_calories">New Calories:</label><br>
+                <input type="text" id="new_calories" name="new_calories"><br><br>
+            </div>
             <input type="submit" value="Save Meal" class="btn">
         </form><br><br>
 
@@ -120,9 +137,14 @@
 
             let mealInfo = meals.find(meal => meal.meal === mealToEdit);
 
-            document.getElementById("new_meal_name").value = mealInfo.meal;
-            document.getElementById("new_ingredients").value = mealInfo.ingredients;
+            document.getElementById("new_meal_name").value = mealInfo.meal || "";
+            document.getElementById("new_ingredients").value = mealInfo.ingredients || "";
+            document.getElementById("new_fats").value = mealInfo.fats || "";
+            document.getElementById("new_carbs").value = mealInfo.carbs || "";
+            document.getElementById("new_protein").value = mealInfo.protein || "";
+            document.getElementById("new_calories").value = mealInfo.calories || "";
         }
+
 
         // Update meal info on page load
         updateMealInfo();

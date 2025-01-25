@@ -7,17 +7,7 @@ from tkinter import *
 
 root = tk.Tk()
 root.title('Sticker Stonks')
-root.iconbitmap("C:\Config\stonks.ico")
 
-config = configparser.ConfigParser()
-config.read("C:\Config\config.ini")
-
-# replace with your api keys
-public_key = config.get('keys', 'public_key')
-secret_key = config.get('keys', 'secret_key')
-
-# change url to prod
-rootApiUrl = "https://api.dmarket.com"
 
 bought_stock_chall = config.getfloat('prices', 'stock_chall')
 bought_stock_con = config.getfloat('prices', 'stock_con')
@@ -32,20 +22,20 @@ number_of_stock_con = config.getint('number_bought', 'stock_con')
 number_of_ant_chall = config.getint('number_bought', 'ant_chall')
 
 
-stock_con = 4.60
+stock_con = 1.3
 stonks_stock_con = ((float(stock_con) - bought_stock_con)/bought_stock_con)*100
 
-stock_chall = 4.04
+stock_chall = 1.67
 stonks_stock_chall = (
     (float(stock_chall) - bought_stock_chall)/bought_stock_chall)*100
 
-ant_chall = 0.64
+ant_chall = 0.19
 stonks_ant_chall = ((float(ant_chall) - bought_ant_chall)/bought_ant_chall)*100
 
-rio_leg = 0.29
+rio_leg = 0.19
 stonks_rio_leg = ((float(rio_leg) - bought_rio_leg)/bought_rio_leg)*100
 
-rio_chall = 0.38
+rio_chall = 0.15
 stonks_rio_chall = ((float(rio_chall) - bought_rio_chall)/bought_rio_chall)*100
 
 total_money_gain = ((stock_con*number_of_stock_con) + (stock_chall*number_of_stock_chall) + (

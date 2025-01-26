@@ -81,9 +81,25 @@
 
     <body>
         <h1>Ingredients</h1>
+        <button type="button" class="btn" onclick="copyMealCSV()">Copy ingredients as CSV</button>
+        <script>
+            var ingredient_array = [];
+            function addToIngredients(name) {
+                if(!ingredient_array.includes(name)){
+                    ingredient_array.push(name);
+                }
+            }
+            function copyMealCSV() {
+                navigator.clipboard.writeText(ingredient_array);
+            }
+        </script>
+
         <ul>
             {% for ingredient, count in ingredients_count.items() %}
             <li>{{ ingredient }}: {{ count }}</li>
+            <script>
+                addToIngredients("{{ ingredient }}");
+            </script>
             {% endfor %}
         </ul>
     </body>
